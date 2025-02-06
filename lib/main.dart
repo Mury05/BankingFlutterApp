@@ -1,5 +1,4 @@
 import 'package:banking_flutter_app/routes/routes.dart';
-import 'package:banking_flutter_app/screen/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

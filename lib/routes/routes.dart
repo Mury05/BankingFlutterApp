@@ -1,4 +1,4 @@
-import 'package:banking_flutter_app/screen/home.dart';
+import 'package:banking_flutter_app/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
