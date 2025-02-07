@@ -7,6 +7,7 @@ class TranslationPage extends StatefulWidget {
   final String amount;
   final String type;
   final IconData icon;
+  final Color color;
 
   // Constructeur pour recevoir les paramètres
   const TranslationPage({
@@ -14,7 +15,8 @@ class TranslationPage extends StatefulWidget {
     required this.name,
     required this.date,
     required this.amount,
-    required this.icon, required this.type,
+    required this.icon,
+    required this.type, required this.color,
   });
 
   @override
@@ -44,7 +46,7 @@ class _TranslationPageState extends State<TranslationPage> {
                       child: Icon(
                         widget.icon, // L'icône est passée via widget
                         size: 24,
-                        color: Colors.green,
+                        color: widget.color,
                       ),
                     ),
                     SizedBox(width: 16),
@@ -78,7 +80,9 @@ class _TranslationPageState extends State<TranslationPage> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: widget.type == 'credit' ? Colors.green[700] : Colors.red,
+                    color: widget.type == 'credit'
+                        ? Colors.green[700]
+                        : Colors.red,
                   ),
                 ),
               ],
