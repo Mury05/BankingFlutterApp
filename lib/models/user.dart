@@ -17,42 +17,27 @@ class User {
 
 final List<User> users = [
   User(
-    username: "Mury",
+    username: "Bella Smithson ",
     email: "mury@gmail.com",
     password: '123',
   ),
   User(
-    username: "John Doe",
-    email: "john@gmail.com",
-    password: '123',
-  ),
-  User(
-    username: "Mury",
+    username: "James Anderson",
     email: "mury@gmail.com",
     password: '123',
   ),
   User(
-    username: "John Doe",
-    email: "john@gmail.com",
-    password: '123',
-  ),
-  User(
-    username: "Mury",
+    username: "Matthew Taylor",
     email: "mury@gmail.com",
     password: '123',
   ),
   User(
-    username: "John Doe",
-    email: "john@gmail.com",
-    password: '123',
-  ),
-  User(
-    username: "Mury",
+    username: "Mury Bright",
     email: "mury@gmail.com",
     password: '123',
   ),
   User(
-    username: "John Doe",
+    username: "Jonathan Menga",
     email: "john@gmail.com",
     password: '123',
   ),
