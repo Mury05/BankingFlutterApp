@@ -1,5 +1,7 @@
+import 'package:uuid/uuid.dart';
+
 class Transaction {
-  final int id;
+  final String id;
   final double amount;
   final DateTime date;
   final String type; // "debit" ou "credit"
@@ -12,8 +14,7 @@ class Transaction {
     required this.type,
     this.receiver,
     required this.cardType,
-  }) : id = DateTime.now()
-            .millisecondsSinceEpoch; // Génère un ID unique basé sur le timestamp
+  }) : id = const Uuid().v4(); // Génère un ID unique basé sur le timestamp
 
   @override
   String toString() {
