@@ -114,19 +114,19 @@ class SoldeHistoryHome extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.window),
-            label: 'Accueil',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.track_changes),
-            label: 'Suivi',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: 'Messages',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Réglages',
+            label: '',
           ),
         ],
       ),

@@ -10,9 +10,14 @@ class SoldePage extends StatefulWidget {
 }
 
 class _soldePageState extends State<SoldePage> {
-  void _addMoney() {}
+  void _addMoney() {
+    Navigator.pushNamed(context, '/add');
+  }
 
-  void _transfert() {}
+  void _transfert() {
+    Navigator.pushNamed(context, '/transfer');
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +71,15 @@ class _soldePageState extends State<SoldePage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 22, vertical: 15),
                         ),
                         child: Text(
                           "ADD MONEY",
-                          style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -84,12 +92,15 @@ class _soldePageState extends State<SoldePage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 22, vertical: 15),
                         ),
                         child: Text(
                           "TRANSFERT",
-                          style: TextStyle(fontSize: 12,color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
