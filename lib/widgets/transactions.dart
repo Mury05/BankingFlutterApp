@@ -32,13 +32,18 @@ class ContactItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
-            name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 13,
-              color: isSelected ? Colors.black : Colors.black87,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          Expanded(
+            child: SizedBox(
+              width: 80,
+              child: Text(
+                name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isSelected ? Colors.black : Colors.black87,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
             ),
           ),
           if (isSelected) // Barre verte sous l'utilisateur sélectionné
