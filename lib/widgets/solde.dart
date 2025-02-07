@@ -6,20 +6,42 @@ class SoldePage extends StatefulWidget {
   const SoldePage({super.key, required this.balance});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _soldePageState createState() => _soldePageState();
+  _SoldePageState createState() => _SoldePageState();
 }
 
-// ignore: camel_case_types
-class _soldePageState extends State<SoldePage> {
+class _SoldePageState extends State<SoldePage>
+    with SingleTickerProviderStateMixin {
   String? selectedCardType;
+  double _animatedBalance = 0.0; // Valeur pour l'animation
+  late AnimationController _controller; // Contrôleur d'animation
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 5000), // Durée de l'animation
+    )..addListener(() {
+        setState(() {
+          // Met à jour la valeur animée
+          _animatedBalance = double.parse(widget.balance) * _controller.value;
+        });
+      });
+    _controller.forward(); // Démarre l'animation
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose le contrôleur d'animation
+    super.dispose();
+  }
 
   void _addMoney() {
     _openCardSelectionModal('/credit');
   }
 
   void _transfert() {
-    _openCardSelectionModal('/transfer');
+    _openCardSelectionModal('/debit');
   }
 
   void _openCardSelectionModal(String route) async {
@@ -51,7 +73,6 @@ class _soldePageState extends State<SoldePage> {
                     color: Colors.green[900]),
               ),
               SizedBox(height: 10),
-              // Séparateur
               Divider(color: Colors.grey.shade400),
               SizedBox(height: 10),
               ...cardTypes.map((type) => ListTile(
@@ -107,17 +128,21 @@ class _soldePageState extends State<SoldePage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                Text(
-                  "\$${widget.balance}",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
+                // Affichage du solde avec animation
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return Text(
+                      "\$${_animatedBalance.toStringAsFixed(2)}", // Affiche le montant formaté
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -136,9 +161,10 @@ class _soldePageState extends State<SoldePage> {
                         child: Text(
                           "ADD MONEY",
                           style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -157,14 +183,15 @@ class _soldePageState extends State<SoldePage> {
                         child: Text(
                           "TRANSFERT",
                           style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
