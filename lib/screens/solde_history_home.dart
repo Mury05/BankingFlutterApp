@@ -1,4 +1,4 @@
-import 'package:banking_flutter_app/controllers/transactions_controller.dart';
+import 'package:banking_flutter_app/controllers/transactionscontroller.dart';
 import 'package:banking_flutter_app/widgets/card.dart';
 import 'package:banking_flutter_app/widgets/translation.dart';
 import 'package:banking_flutter_app/widgets/solde.dart';
@@ -19,19 +19,43 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
   void initState() {
     super.initState();
   }
- String formatTransactionDate(DateTime date) {
-  DateTime now = DateTime.now();
-  String formattedTime = DateFormat.jm().format(date); // "12:00 PM"
 
-  if (DateUtils.isSameDay(now, date)) {
-    return "Today, $formattedTime";
-  } else if (DateUtils.isSameDay(now.subtract(Duration(days: 1)), date)) {
-    return "Yesterday, $formattedTime";
-  } else {
-    return DateFormat('EEEE, MMM d, yyyy – $formattedTime').format(date); // Exemple: "Monday, Feb 5, 2025 – 12:00 PM"
+  String formatTransactionDate(DateTime date) {
+    DateTime now = DateTime.now();
+    String formattedTime = DateFormat.jm().format(date); // "12:00 PM"
+
+    if (DateUtils.isSameDay(now, date)) {
+      return "Today, $formattedTime";
+    } else if (DateUtils.isSameDay(now.subtract(Duration(days: 1)), date)) {
+      return "Yesterday, $formattedTime";
+    } else {
+      return DateFormat('EEEE, MMM d, yyyy – $formattedTime')
+          .format(date); // Exemple: "Monday, Feb 5, 2025 – 12:00 PM"
+    }
   }
-}
- 
+
+  Future<bool?> _showConfirmDeleteDialog(BuildContext context) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete Transaction"),
+          content: Text("Are you sure you want to delete this transaction?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), // Annuler
+              child: Text("Cancel", style:  TextStyle(color: Colors.green),),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true), // Confirmer
+              child: Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,14 +92,16 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                 children: [
                   CardPage(
                     cardType: 'Primary Card',
-                    firstAmount: '+\$7289',
-                    secondAmount: '\$${_transactions.getBalanceByCardType('Primary Card')}',
+                    firstAmount: '****************7289',
+                    secondAmount:
+                        '\$${_transactions.getBalanceByCardType('Primary Card')}',
                   ),
                   const SizedBox(height: 10),
                   CardPage(
                     cardType: 'Secondary Card',
-                    firstAmount: '+\$8623',
-                    secondAmount: '\$${_transactions.getBalanceByCardType('Secondary Card')}',
+                    firstAmount: '****************5670',
+                    secondAmount:
+                        '\$${_transactions.getBalanceByCardType('Secondary Card')}',
                   ),
                 ],
               ),
@@ -96,15 +122,45 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                   final transaction = _transactions.transactions[index];
 
                   return Dismissible(
-                    key: Key('value'),
-                    onDismissed: (direction){},
+                    key: Key(transaction.id), // Identifiant unique
+                    direction:
+                        DismissDirection.endToStart, // Swipe de droite à gauche
+                    confirmDismiss: (direction) async {
+                      return await _showConfirmDeleteDialog(context);
+                    },
+                    onDismissed: (direction) {
+                      setState(() {
+                        _transactions.removeTransaction(transaction.id);
+                      });
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green.shade500,
+                          content: Text(
+                            "Transaction deleted",
+                            style: TextStyle(),
+                          ),
+                          action: SnackBarAction(
+                            textColor: Colors.green[900],
+                            label: "Undo",
+                            onPressed: () {
+                              setState(() {
+                                _transactions.addTransaction(transaction);
+                              });
+                            },
+                          ),
+                        ),
+                      );
+                    },
                     background: Container(
                       color: Colors.red,
-                      child: Icon(Icons.delete, color: Colors.white,),
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Icon(Icons.delete, color: Colors.white),
                     ),
                     child: TranslationPage(
                       type: transaction.type,
-                      name: transaction.receiver ?? "My Own Transaction",
+                      name: transaction.receiver ?? "My Transaction",
                       amount: transaction.type == 'credit'
                           ? "+\$${transaction.amount}"
                           : "-\$${transaction.amount}",
@@ -112,7 +168,7 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                       icon: transaction.type == 'credit'
                           ? Icons.trending_up
                           : Icons.trending_down,
-                          color: transaction.type == 'credit'
+                      color: transaction.type == 'credit'
                           ? Colors.green
                           : Colors.red,
                     ),
