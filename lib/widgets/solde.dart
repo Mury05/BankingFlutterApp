@@ -6,9 +6,11 @@ class SoldePage extends StatefulWidget {
   const SoldePage({super.key, required this.balance});
 
   @override
+  // ignore: library_private_types_in_public_api
   _soldePageState createState() => _soldePageState();
 }
 
+// ignore: camel_case_types
 class _soldePageState extends State<SoldePage> {
   void _addMoney() {}
 
@@ -60,7 +62,7 @@ class _soldePageState extends State<SoldePage> {
                     ElevatedButton(
                       onPressed: _addMoney,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: Colors.cyanAccent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -69,14 +71,14 @@ class _soldePageState extends State<SoldePage> {
                       ),
                       child: Text(
                         "ADD MONEY",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(fontSize: 10, color: Colors.black),
                       ),
                     ),
                     SizedBox(width: 20),
                     ElevatedButton(
                       onPressed: _transfert,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -85,7 +87,7 @@ class _soldePageState extends State<SoldePage> {
                       ),
                       child: Text(
                         "Transfert",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(fontSize: 10, color: Colors.black),
                       ),
                     ),
                   ],

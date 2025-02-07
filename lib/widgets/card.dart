@@ -13,49 +13,48 @@ class CardPage extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CardPageState createState() => _CardPageState();
 }
 
 class _CardPageState extends State<CardPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.cardType,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.cardType,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
                 ),
-                SizedBox(height: 5),
-                Text(
-                  widget.firstAmount,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              widget.secondAmount,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-                color: Colors.black,
               ),
+              SizedBox(height: 5),
+              Text(
+                widget.firstAmount,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            widget.secondAmount,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.black,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

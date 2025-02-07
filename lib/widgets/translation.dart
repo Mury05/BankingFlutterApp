@@ -17,66 +17,65 @@ class TranslationPage extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _TranslationPageState createState() => _TranslationPageState();
 }
 
 class _TranslationPageState extends State<TranslationPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    // Utilise l'icône passée en paramètre
-                    Icon(
-                      widget.icon, // L'icône est passée via widget
-                      size: 24,
-                      color: Colors.green,
-                    ),
-                    SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Utilise le nom passé en paramètre
-                        Text(
-                          widget.name, // Le nom est passé via widget
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        // Utilise la date passée en paramètre
-                        Text(
-                          widget.date, // La date est passée via widget
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                // Utilise le montant passé en paramètre
-                Text(
-                  widget.amount, // Le montant est passé via widget
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.red,
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  // Utilise l'icône passée en paramètre
+                  Icon(
+                    widget.icon, // L'icône est passée via widget
+                    size: 24,
+                    color: Colors.green,
                   ),
+                  SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Utilise le nom passé en paramètre
+                      Text(
+                        widget.name, // Le nom est passé via widget
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      // Utilise la date passée en paramètre
+                      Text(
+                        widget.date, // La date est passée via widget
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              // Utilise le montant passé en paramètre
+              Text(
+                widget.amount, // Le montant est passé via widget
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.red,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
