@@ -34,10 +34,17 @@ class _TranslationPageState extends State<TranslationPage> {
                 Row(
                   children: [
                     // Utilise l'icône passée en paramètre
-                    Icon(
-                      widget.icon, // L'icône est passée via widget
-                      size: 24,
-                      color: Colors.green,
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(50)
+                      ),
+                      child: Icon(
+                        widget.icon, // L'icône est passée via widget
+                        size: 24,
+                        color: Colors.green,
+                      ),
                     ),
                     SizedBox(width: 16),
                     Column(
@@ -48,7 +55,7 @@ class _TranslationPageState extends State<TranslationPage> {
                           widget.name, // Le nom est passé via widget
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 15,
                             color: Colors.black87,
                           ),
                         ),
@@ -56,7 +63,7 @@ class _TranslationPageState extends State<TranslationPage> {
                         Text(
                           widget.date, // La date est passée via widget
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: Colors.grey[600],
                           ),
                         ),

@@ -17,7 +17,7 @@ class _soldePageState extends State<SoldePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(8),
       child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(16.0),
@@ -25,7 +25,7 @@ class _soldePageState extends State<SoldePage> {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.green.withOpacity(0.1),
                 blurRadius: 10,
                 offset: Offset(0, 4),
               ),
@@ -57,35 +57,40 @@ class _soldePageState extends State<SoldePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: _addMoney,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      // width: 50,
+                      child: ElevatedButton(
+                        onPressed: _addMoney,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 22, vertical: 15),
                         ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                      ),
-                      child: Text(
-                        "ADD MONEY",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        child: Text(
+                          "ADD MONEY",
+                          style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: _transfert,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      child: ElevatedButton(
+                        onPressed: _transfert,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 22, vertical: 15),
                         ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                      ),
-                      child: Text(
-                        "Transfert",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        child: Text(
+                          "TRANSFERT",
+                          style: TextStyle(fontSize: 12,color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ],
