@@ -45,6 +45,10 @@ class Transactions {
     return true; // Transaction réussie
   }
 
+  void removeTransaction(String id) {
+     _transactions.removeWhere((transaction) => transaction.id == id);
+}
+
   List<Transaction> get transactions => _transactions;
 
   // 🔹 Récupère le solde total de toutes les cartes
