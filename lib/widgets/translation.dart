@@ -5,6 +5,7 @@ class TranslationPage extends StatefulWidget {
   final String name;
   final String date;
   final String amount;
+  final String type;
   final IconData icon;
 
   // Constructeur pour recevoir les paramètres
@@ -13,7 +14,7 @@ class TranslationPage extends StatefulWidget {
     required this.name,
     required this.date,
     required this.amount,
-    required this.icon,
+    required this.icon, required this.type,
   });
 
   @override
@@ -77,7 +78,7 @@ class _TranslationPageState extends State<TranslationPage> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: Colors.red,
+                    color: widget.type == 'credit' ? Colors.green[700] : Colors.red,
                   ),
                 ),
               ],
