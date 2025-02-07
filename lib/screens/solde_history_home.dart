@@ -1,8 +1,10 @@
+import 'package:banking_flutter_app/controllers/transactions_controller.dart';
 import 'package:banking_flutter_app/models/transactions.dart';
 import 'package:banking_flutter_app/widgets/card.dart';
 import 'package:banking_flutter_app/widgets/translation.dart';
 import 'package:banking_flutter_app/widgets/solde.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SoldeHistoryHome extends StatefulWidget {
   const SoldeHistoryHome({super.key});
@@ -17,54 +19,20 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
   @override
   void initState() {
     super.initState();
-    _initializeTransactions();
   }
+ String formatTransactionDate(DateTime date) {
+  DateTime now = DateTime.now();
+  String formattedTime = DateFormat.jm().format(date); // "12:00 PM"
 
- void _initializeTransactions() {
-  void addWithCheck(Transaction transaction) {
-    bool result = _transactions.addTransaction(transaction);
-    
-    if (!result) {
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Fonds insuffisants sur la carte ${transaction.cardType}", style: TextStyle(color: Colors.white, fontFamily: "Roboto")),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 5),
-          ),
-        );
-         });
-    } else {
-      setState(() {}); // Mise à jour de l'UI si la transaction est ajoutée
-    }
+  if (DateUtils.isSameDay(now, date)) {
+    return "Today, $formattedTime";
+  } else if (DateUtils.isSameDay(now.subtract(Duration(days: 1)), date)) {
+    return "Yesterday, $formattedTime";
+  } else {
+    return DateFormat('EEEE, MMM d, yyyy – $formattedTime').format(date); // Exemple: "Monday, Feb 5, 2025 – 12:00 PM"
   }
-
-  addWithCheck(Transaction(
-    amount: 250.00,
-    date: DateTime.now().subtract(const Duration(days: 1)),
-    type: 'credit',
-    receiver: "Pratick Smithson",
-    cardType: 'Primary Card',
-  ));
-
-  addWithCheck(Transaction(
-    amount: 2000.00,
-    date: DateTime.now(),
-    type: 'credit',
-    receiver: "Avery Smithson",
-    cardType: 'Secondary Card',
-  ));
-
-  addWithCheck(Transaction(
-    amount: 200.00,
-    date: DateTime.now(),
-    type: 'debit',
-    receiver: "Bright Line",
-    cardType: 'Primary Card',
-  ));
 }
-
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,11 +97,12 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                   final transaction = _transactions.transactions[index];
 
                   return TranslationPage(
-                    name: transaction.receiver,
+                    type: transaction.type,
+                    name: transaction.receiver ?? "My Own Transaction",
                     amount: transaction.type == 'credit'
                         ? "+\$${transaction.amount}"
                         : "-\$${transaction.amount}",
-                    date: "${transaction.date}",
+                    date: formatTransactionDate(transaction.date),
                     icon: transaction.type == 'credit'
                         ? Icons.get_app
                         : Icons.money_off,
