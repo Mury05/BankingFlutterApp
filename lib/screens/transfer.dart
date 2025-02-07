@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:banking_flutter_app/widgets/transactions.dart';
+import '../models/user.dart';
 
 class MyTransferPage extends StatefulWidget {
   const MyTransferPage({super.key});
@@ -61,10 +62,19 @@ class _MyTransferPageState extends State<MyTransferPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ContactItem(imagePath: "R.jpg", name: "Avery\nSmithson", isSelected: false),
-                  ContactItem(imagePath: "R.jpg", name: "James\nAnderson", isSelected: true),
-                  ContactItem(imagePath: "R.jpg", name: "Matthew\nTaylor", isSelected: false),
-                  ContactItem(imagePath: "R.jpg", name: "Michael\nJohnson", isSelected: false),
+                  Expanded(
+                      child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: users.length,
+                    itemBuilder: (context, index) {
+                      User user = users[index];
+                      return ContactItem(
+                        imagePath: "R.jpg",
+                        name: user.username,
+                        isSelected: false,
+                      );
+                    },
+                  ))
                 ],
               ),
             ),
@@ -86,7 +96,7 @@ class _MyTransferPageState extends State<MyTransferPage> {
           const Spacer(),
 
           // Montants rapides
-           Wrap(
+          Wrap(
             spacing: 15,
             children: [
               QuickAmountButton(
@@ -137,24 +147,22 @@ class _MyTransferPageState extends State<MyTransferPage> {
           ),
         ],
       ),
-
       bottomNavigationBar: // Bouton "SEND"
           Container(
-            width: double.infinity,
-            height: 70,
-            color: const Color.fromARGB(255, 32, 59, 35),
-            child: Center(
-              child: Text(
-                "SEND \$$amount >",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+        width: double.infinity,
+        height: 70,
+        color: const Color.fromARGB(255, 32, 59, 35),
+        child: Center(
+          child: Text(
+            "SEND \$$amount >",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
+        ),
+      ),
     );
   }
 }
-
