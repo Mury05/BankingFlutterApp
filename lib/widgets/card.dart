@@ -23,25 +23,26 @@ class _CardPageState extends State<CardPage> {
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   widget.cardType,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
+                    color: Colors.green[900],
                   ),
                 ),
                 SizedBox(height: 5),
                 Text(
                   widget.firstAmount,
                   style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.red,
+                    fontSize: 15,
+                    color: Colors.grey[600],
                   ),
                 ),
               ],
@@ -50,7 +51,7 @@ class _CardPageState extends State<CardPage> {
               widget.secondAmount,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 24,
+                fontSize: 18,
                 color: Colors.black,
               ),
             ),
