@@ -14,8 +14,7 @@ class MyTransferPage extends StatefulWidget {
 
 class _MyTransferPageState extends State<MyTransferPage> {
   String amount = "5.00";
-  String selectedContact =
-      "James Anderson"; // Par défaut, un contact sélectionné
+  String selectedContact = users[0].username; // Par défaut, un contact sélectionné
   final Transactions _transactions = Transactions();
   String? selectedCard;
 
@@ -74,22 +73,19 @@ class _MyTransferPageState extends State<MyTransferPage> {
         showMessage("Insufficient funds on the ${transaction.cardType}.",
             Colors.red, context);
         return;
-      }else{
-      setState(() {});
-          showMessage(
-        "Transaction successful! Sent \$$transferAmount to $selectedContact.",
-        Colors.green,
-        context);
+      } else {
+        setState(() {});
+        showMessage(
+            "Transaction successful! Sent \$$transferAmount to $selectedContact.",
+            Colors.green,
+            context);
         Navigator.pushNamed(context, '/home');
-
       }
     } else {
-      showMessage(
-          "Invalid amount. Please enter a valid amount greater than 0.", Colors.red, context);
+      showMessage("Invalid amount. Please enter a valid amount greater than 0.",
+          Colors.red, context);
       return;
     }
-
-   
   }
 
   @override
@@ -122,42 +118,23 @@ class _MyTransferPageState extends State<MyTransferPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ContactItem(
-                      imagePath: "R.jpg",
-                      name: "Avery\n Smithson",
-                      isSelected: selectedContact == "Avery Smithson",
-                      onTap: () {
-                        setState(() {
-                          selectedContact = "Avery Smithson";
-                        });
-                      }),
-                  ContactItem(
-                      imagePath: "R.jpg",
-                      name: "James\n Anderson",
-                      isSelected: selectedContact == "James Anderson",
-                      onTap: () {
-                        setState(() {
-                          selectedContact = "James Anderson";
-                        });
-                      }),
-                  ContactItem(
-                      imagePath: "R.jpg",
-                      name: "Matthew \nTaylor",
-                      isSelected: selectedContact == "Matthew Taylor",
-                      onTap: () {
-                        setState(() {
-                          selectedContact = "Matthew Taylor";
-                        });
-                      }),
-                  ContactItem(
-                      imagePath: "R.jpg",
-                      name: "Michael \nJohnson",
-                      isSelected: selectedContact == "Michael Johnson",
-                      onTap: () {
-                        setState(() {
-                          selectedContact = "Michael Johnson";
-                        });
-                      }),
+                  Expanded(
+                      child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: users.length,
+                    itemBuilder: (context, index) {
+                      User user = users[index];
+                      return ContactItem(
+                          imagePath: "R.jpg",
+                          name: user.username,
+                          isSelected: selectedContact == user.username,
+                          onTap: () {
+                            setState(() {
+                              selectedContact = user.username;
+                            });
+                          });
+                    },
+                  )),
                 ],
               ),
             ),
