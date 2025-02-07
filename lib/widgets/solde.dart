@@ -1,3 +1,4 @@
+import 'package:banking_flutter_app/widgets/selectedcard.dart';
 import 'package:flutter/material.dart';
 
 class SoldePage extends StatefulWidget {
@@ -10,13 +11,67 @@ class SoldePage extends StatefulWidget {
 }
 
 class _soldePageState extends State<SoldePage> {
+  String? selectedCardType;
+
   void _addMoney() {
-    Navigator.pushNamed(context, '/add');
+    _openCardSelectionModal('/add');
   }
 
   void _transfert() {
-    Navigator.pushNamed(context, '/transfer');
+    _openCardSelectionModal('/transfer');
+  }
 
+  void _openCardSelectionModal(String route) async {
+    final List<String> cardTypes = [
+      "Primary Card",
+      "Secondary Debit Card",
+    ];
+
+String? selected = await showModalBottomSheet<String>(
+  context: context,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  ),
+  builder: (BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white, // Couleur de fond du modal
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Select Card Type",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green[900]),
+          ),
+          SizedBox(height: 10),
+          // Séparateur
+          Divider(color: Colors.grey.shade400),
+          SizedBox(height: 10),
+          ...cardTypes.map((type) => ListTile(
+                title: Text(
+                  type,
+                  style: TextStyle(fontSize: 16),
+                ),
+                onTap: () => Navigator.pop(context, type),
+                trailing: Icon(Icons.arrow_forward, color: Colors.green[900]), // Icône pour indiquer l'action
+              )),
+        ],
+      ),
+    );
+  },
+);
+
+
+    if (selected != null) {
+      setState(() {
+        selectedCardType = selected;
+        print(selectedCardType);
+        Navigator.pushNamed(context, route);
+      });
+    }
   }
 
   @override
