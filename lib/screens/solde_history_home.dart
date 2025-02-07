@@ -95,16 +95,27 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                 itemBuilder: (context, index) {
                   final transaction = _transactions.transactions[index];
 
-                  return TranslationPage(
-                    type: transaction.type,
-                    name: transaction.receiver ?? "My Own Transaction",
-                    amount: transaction.type == 'credit'
-                        ? "+\$${transaction.amount}"
-                        : "-\$${transaction.amount}",
-                    date: formatTransactionDate(transaction.date),
-                    icon: transaction.type == 'credit'
-                        ? Icons.get_app
-                        : Icons.money_off,
+                  return Dismissible(
+                    key: Key('value'),
+                    onDismissed: (direction){},
+                    background: Container(
+                      color: Colors.red,
+                      child: Icon(Icons.delete, color: Colors.white,),
+                    ),
+                    child: TranslationPage(
+                      type: transaction.type,
+                      name: transaction.receiver ?? "My Own Transaction",
+                      amount: transaction.type == 'credit'
+                          ? "+\$${transaction.amount}"
+                          : "-\$${transaction.amount}",
+                      date: formatTransactionDate(transaction.date),
+                      icon: transaction.type == 'credit'
+                          ? Icons.trending_up
+                          : Icons.trending_down,
+                          color: transaction.type == 'credit'
+                          ? Colors.green
+                          : Colors.red,
+                    ),
                   );
                 },
               ),
