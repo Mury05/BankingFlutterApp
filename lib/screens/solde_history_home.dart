@@ -1,5 +1,4 @@
 import 'package:banking_flutter_app/controllers/transactions_controller.dart';
-import 'package:banking_flutter_app/models/transactions.dart';
 import 'package:banking_flutter_app/widgets/card.dart';
 import 'package:banking_flutter_app/widgets/translation.dart';
 import 'package:banking_flutter_app/widgets/solde.dart';

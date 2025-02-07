@@ -6,9 +6,11 @@ class SoldePage extends StatefulWidget {
   const SoldePage({super.key, required this.balance});
 
   @override
+  // ignore: library_private_types_in_public_api
   _soldePageState createState() => _soldePageState();
 }
 
+// ignore: camel_case_types
 class _soldePageState extends State<SoldePage> {
   String? selectedCardType;
 

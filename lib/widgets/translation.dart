@@ -18,6 +18,7 @@ class TranslationPage extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _TranslationPageState createState() => _TranslationPageState();
 }
 
@@ -38,9 +39,8 @@ class _TranslationPageState extends State<TranslationPage> {
                     Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(50)
-                      ),
+                          color: Colors.grey.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(50)),
                       child: Icon(
                         widget.icon, // L'icône est passée via widget
                         size: 24,

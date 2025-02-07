@@ -3,6 +3,7 @@ import 'package:banking_flutter_app/models/transactions.dart';
 import 'package:banking_flutter_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:banking_flutter_app/widgets/transactions.dart';
+import '../models/user.dart';
 
 class MyTransferPage extends StatefulWidget {
   const MyTransferPage({super.key});
