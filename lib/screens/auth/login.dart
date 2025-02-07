@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
           duration: Duration(seconds: 6),
         ),
       );
-      Navigator.pushNamed(context, '/solde');
+      Navigator.pushNamed(context, '/home');
     }
   }
 

@@ -1,4 +1,3 @@
-import 'package:banking_flutter_app/widgets/selectedcard.dart';
 import 'package:flutter/material.dart';
 
 class SoldePage extends StatefulWidget {
