@@ -4,27 +4,36 @@ class Transaction {
   final DateTime date;
   final String type; // "debit" ou "credit"
   final String cardType; // "Primary", "Secondary", etc.
-  final int receiverId;
+  final String receiver;
 
   Transaction({
     required this.amount,
     required this.date,
     required this.type,
-    required this.receiverId,
+    required this.receiver,
     required this.cardType,
-  }) : id = DateTime.now().millisecondsSinceEpoch; // Génère un ID unique basé sur le timestamp
+  }) : id = DateTime.now()
+            .millisecondsSinceEpoch; // Génère un ID unique basé sur le timestamp
 
   @override
   String toString() {
-    return 'Transaction(id: $id, amount: $amount, date: $date, type: $type, cardType: $cardType, receiverId: $receiverId)';
+    return 'Transaction(id: $id, amount: $amount, date: $date, type: $type, cardType: $cardType, receiver: $receiver)';
   }
 }
 
 class Transactions {
   final List<Transaction> _transactions = [];
 
-  void addTransaction(Transaction transaction) {
+  bool addTransaction(Transaction transaction) {
+    double currentBalance = getBalanceByCardType(transaction.cardType);
+
+    // Vérifier si le solde est suffisant pour un débit
+    if (transaction.type == 'debit' && currentBalance < transaction.amount) {
+      return false; // Transaction refusée
+    }
+
     _transactions.add(transaction);
+    return true; // Transaction réussie
   }
 
   List<Transaction> get transactions => _transactions;
@@ -45,7 +54,8 @@ class Transactions {
   // 🔹 Récupère le solde d'une carte spécifique
   double getBalanceByCardType(String cardType) {
     double balance = 0;
-    for (var transaction in _transactions.where((t) => t.cardType == cardType)) {
+    for (var transaction
+        in _transactions.where((t) => t.cardType == cardType)) {
       if (transaction.type == 'credit') {
         balance += transaction.amount;
       } else if (transaction.type == 'debit') {
