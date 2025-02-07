@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class Routes {
   final Map<String, WidgetBuilder> _routes = {
     '/': (context) => const MyHomePage(),
-    '/transfer': (context) => const MyTransferPage(),
+    '/debit': (context) => const MyTransferPage(),
     '/credit': (context) => const MyAddTransactionPage(),
     '/home': (context) => const SoldeHistoryHome(),
     '/login': (context) => const LoginPage(),
