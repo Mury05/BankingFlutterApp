@@ -1,39 +1,72 @@
+import 'package:banking_flutter_app/models/transactions.dart';
 import 'package:banking_flutter_app/widgets/card.dart';
 import 'package:banking_flutter_app/widgets/translation.dart';
 import 'package:banking_flutter_app/widgets/solde.dart';
 import 'package:flutter/material.dart';
 
-class SoldeHistoryHome extends StatelessWidget {
+class SoldeHistoryHome extends StatefulWidget {
   const SoldeHistoryHome({super.key});
+
+  @override
+  State<SoldeHistoryHome> createState() => _SoldeHistoryHomeState();
+}
+
+class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
+  final Transactions _transactions = Transactions();
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeTransactions();
+  }
+
+ void _initializeTransactions() {
+  void addWithCheck(Transaction transaction) {
+    bool result = _transactions.addTransaction(transaction);
+    
+    if (!result) {
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Fonds insuffisants sur la carte ${transaction.cardType}", style: TextStyle(color: Colors.white, fontFamily: "Roboto")),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 5),
+          ),
+        );
+         });
+    } else {
+      setState(() {}); // Mise à jour de l'UI si la transaction est ajoutée
+    }
+  }
+
+  addWithCheck(Transaction(
+    amount: 250.00,
+    date: DateTime.now().subtract(const Duration(days: 1)),
+    type: 'credit',
+    receiver: "Pratick Smithson",
+    cardType: 'Primary Card',
+  ));
+
+  addWithCheck(Transaction(
+    amount: 2000.00,
+    date: DateTime.now(),
+    type: 'credit',
+    receiver: "Avery Smithson",
+    cardType: 'Secondary Card',
+  ));
+
+  addWithCheck(Transaction(
+    amount: 200.00,
+    date: DateTime.now(),
+    type: 'debit',
+    receiver: "Bright Line",
+    cardType: 'Primary Card',
+  ));
+}
+
+
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> transactions = [
-      {
-        "name": "Pratick Smithson",
-        "amount": "-\$120.00",
-        "date": "Yesterday, 12:58 PM",
-        "icon": Icons.set_meal,
-      },
-      {
-        "name": "Aristide",
-        "amount": "+\$20.00",
-        "date": "Today, 18:00 PM",
-        "icon": Icons.get_app,
-      },
-      {
-        "name": "Mury",
-        "amount": "-\$1.00",
-        "date": "Now",
-        "icon": Icons.money,
-      },
-      {
-        "name": "Léger",
-        "amount": "-\$120.00",
-        "date": "Yesterday, 12:58 PM",
-        "icon": Icons.set_meal,
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -55,10 +88,13 @@ class SoldeHistoryHome extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SoldePage(balance: "7,172.85"),
+            // 🔹 Affichage du solde total
+            SoldePage(balance: _transactions.totalBalance.toString()),
+
             const SizedBox(height: 20),
             const Divider(),
 
+            // 🔹 Affichage des cartes
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -66,13 +102,13 @@ class SoldeHistoryHome extends StatelessWidget {
                   CardPage(
                     cardType: 'Primary Card',
                     firstAmount: '+\$7289',
-                    secondAmount: '\$2,874.85',
+                    secondAmount: '\$${_transactions.getBalanceByCardType('Primary Card')}',
                   ),
                   const SizedBox(height: 10),
                   CardPage(
-                    cardType: 'Secondary Debit Card',
+                    cardType: 'Secondary Card',
                     firstAmount: '+\$8623',
-                    secondAmount: '\$4,288.00',
+                    secondAmount: '\$${_transactions.getBalanceByCardType('Secondary Card')}',
                   ),
                 ],
               ),
@@ -85,16 +121,22 @@ class SoldeHistoryHome extends StatelessWidget {
               child: Text("TRANSACTIONS"),
             ),
 
-            // Liste scrollable des transactions
+            // 🔹 Liste scrollable des transactions
             Expanded(
               child: ListView.builder(
-                itemCount: transactions.length,
+                itemCount: _transactions.transactions.length,
                 itemBuilder: (context, index) {
+                  final transaction = _transactions.transactions[index];
+
                   return TranslationPage(
-                    name: transactions[index]['name'],
-                    amount: transactions[index]['amount'],
-                    date: transactions[index]['date'],
-                    icon: transactions[index]['icon'],
+                    name: transaction.receiver,
+                    amount: transaction.type == 'credit'
+                        ? "+\$${transaction.amount}"
+                        : "-\$${transaction.amount}",
+                    date: "${transaction.date}",
+                    icon: transaction.type == 'credit'
+                        ? Icons.get_app
+                        : Icons.money_off,
                   );
                 },
               ),
@@ -103,14 +145,12 @@ class SoldeHistoryHome extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // Fixe l'alignement des éléments
-        backgroundColor:
-            Colors.white, // Ajoute une couleur de fond pour le contraste
-        selectedFontSize: 0, // Supprime l’espace inutile sous les icônes
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedFontSize: 0,
         unselectedFontSize: 0,
-        selectedItemColor: Colors.green, // Couleur de l’icône sélectionnée
-        unselectedItemColor:
-            Colors.grey, // Couleur des icônes non sélectionnées
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.window),
