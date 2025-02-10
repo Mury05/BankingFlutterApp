@@ -5,60 +5,69 @@ class ContactItem extends StatelessWidget {
     super.key,
     required this.imagePath,
     required this.name,
-    required this.isSelected,
+    required this.isSelected, required this.onTap,
   });
 
   final String imagePath;
   final String name;
   final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(3.0),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.green : Colors.grey.shade400,
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: CircleAvatar(
-            foregroundImage: AssetImage(imagePath),
-            radius: 23,
-            backgroundColor: isSelected ? Colors.green : Colors.grey.shade400,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          name,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 13,
-            color: isSelected ? Colors.black : Colors.black87,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-        if (isSelected) // Barre verte sous l'utilisateur sélectionné
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
           Container(
-            margin: const EdgeInsets.only(top: 10),
-            width: 91,
-            height: 2,
+            padding: const EdgeInsets.all(3.0),
             decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(2),
+              color: isSelected ? Colors.green : Colors.grey.shade400,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: CircleAvatar(
+              foregroundImage: AssetImage(imagePath),
+              radius: 23,
+              backgroundColor: isSelected ? Colors.green : Colors.grey.shade400,
             ),
           ),
-        if (!isSelected) // Barre verte sous l'utilisateur sélectionné
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            width: 91,
-            height: 2,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(2),
+          const SizedBox(height: 6),
+          Expanded(
+            child: SizedBox(
+              width: 80,
+              child: Text(
+                name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isSelected ? Colors.black : Colors.black87,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
             ),
           ),
-      ],
+          if (isSelected) // Barre verte sous l'utilisateur sélectionné
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: 91,
+              height: 2,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          if (!isSelected) // Barre verte sous l'utilisateur sélectionné
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: 91,
+              height: 2,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

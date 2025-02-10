@@ -1,4 +1,4 @@
-import 'package:banking_flutter_app/screens/add.dart';
+import 'package:banking_flutter_app/screens/credit.dart';
 import 'package:banking_flutter_app/screens/home.dart';
 import 'package:banking_flutter_app/screens/auth/login.dart';
 import 'package:banking_flutter_app/screens/auth/register.dart';
@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 class Routes {
   final Map<String, WidgetBuilder> _routes = {
     '/': (context) => const MyHomePage(),
-    '/transfer': (context) => const MyTransferPage(),
-    '/add': (context) => const MyAddTransactionPage(),
+    '/debit': (context) => const MyTransferPage(),
+    '/credit': (context) => const MyAddTransactionPage(),
     '/home': (context) => const SoldeHistoryHome(),
     '/login': (context) => const LoginPage(),
     '/register': (context) => const RegisterPage(),
