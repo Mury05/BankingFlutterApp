@@ -13,11 +13,33 @@ class CardPage extends StatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _CardPageState createState() => _CardPageState();
 }
 
-class _CardPageState extends State<CardPage> {
+class _CardPageState extends State<CardPage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller; // Contrôleur d'animation
+  double _animatedSecondAmount = 0.0; // Valeur animée pour secondAmount
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 5000), // Durée de l'animation
+    )..addListener(() {
+        setState(() {
+          _animatedSecondAmount = double.parse(widget.secondAmount.replaceAll('\$', '').replaceAll(',', '')) * _controller.value;
+        });
+      });
+    _controller.forward(); // Démarre l'animation
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose le contrôleur d'animation
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,22 +61,34 @@ class _CardPageState extends State<CardPage> {
                   ),
                 ),
                 SizedBox(height: 5),
-                Text(
-                  widget.firstAmount,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey[600],
-                  ),
+                // Affichage de firstAmount avec animation
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return Text(
+                      widget.firstAmount, // Formatage du montant
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey[600],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
-            Text(
-              widget.secondAmount,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Colors.black,
-              ),
+            // Affichage de secondAmount avec animation
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Text(
+                  "\$${_animatedSecondAmount.toStringAsFixed(2)}", // Formatage du montant
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                );
+              },
             ),
           ],
         ),
