@@ -2,30 +2,62 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class CarrouselOnBoarding extends StatelessWidget {
+class CarrouselOnBoarding extends StatefulWidget {
   const CarrouselOnBoarding({
     super.key,
-    required PageController pageController,
+    required this.pageController,
     required this.carouselItems,
-  }) : _pageController = pageController;
+  });
 
-  final PageController _pageController;
+  final PageController pageController;
   final List<Map<String, String>> carouselItems;
+
+  @override
+  State<CarrouselOnBoarding> createState() => _CarrouselOnBoardingState();
+}
+
+class _CarrouselOnBoardingState extends State<CarrouselOnBoarding> {
+  int currentIndex = 0;
+  double opacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.pageController.addListener(() {
+      int newIndex = widget.pageController.page!.round();
+      if (newIndex != currentIndex) {
+        setState(() {
+          opacity = 0.0;
+        });
+
+        Future.delayed(const Duration(milliseconds: 600), () {
+          setState(() {
+          currentIndex = newIndex;
+            opacity = 1.0;
+          });
+        });
+      }
+    });
+
+    Future.delayed(const Duration(milliseconds: 600), () {
+      setState(() {
+        opacity = 1.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Carrousel avec PageView
         PageView.builder(
-          controller: _pageController,
-          itemCount: carouselItems.length,
+          controller: widget.pageController,
+          itemCount: widget.carouselItems.length,
           itemBuilder: (context, index) {
-            final item = carouselItems[index];
+            final item = widget.carouselItems[index];
             return Stack(
               fit: StackFit.expand,
               children: [
-                // Image de fond
                 Image.asset(
                   item["image"]!,
                   fit: BoxFit.contain,
@@ -51,28 +83,32 @@ class CarrouselOnBoarding extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const Spacer(),
 
-                      // Texte principal
-                      Text(
+                      // Animation du titre
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 500),
+                        opacity: index == currentIndex ? opacity : 0.0,
+                        child: Text(
                         item["title"]!,
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 35,
                           fontWeight: FontWeight.w900,
                           color: Colors.green[900],
+                          ),
                         ),
                       ),
 
                       const SizedBox(height: 20),
 
-                      // Sous-texte
-                      Text(
-                        item["subtitle"]!,
-                        style: const TextStyle(
+                      // Animation du sous-titre (lettre par lettre)
+                      TypewriterText(
+                        text: item["subtitle"]!,
+                        textStyle: const TextStyle(
                           fontSize: 16,
                           color: Color.fromARGB(255, 47, 81, 48),
                         ),
+                        duration: Duration(milliseconds: 30), // Plus rapide pour le sous-titre
                       ),
 
                       const SizedBox(height: 80),
@@ -91,8 +127,8 @@ class CarrouselOnBoarding extends StatelessWidget {
           right: 0,
           child: Center(
             child: SmoothPageIndicator(
-              controller: _pageController,
-              count: carouselItems.length,
+              controller: widget.pageController,
+              count: widget.carouselItems.length,
               effect: ExpandingDotsEffect(
                 activeDotColor: Colors.green.shade900,
                 dotColor: Colors.green.shade400,
@@ -107,6 +143,51 @@ class CarrouselOnBoarding extends StatelessWidget {
   }
 }
 
+/// Widget pour l'effet "écriture progressive"
+class TypewriterText extends StatefulWidget {
+  final String text;
+  final TextStyle textStyle;
+  final Duration duration;
+
+  const TypewriterText({
+    super.key,
+    required this.text,
+    required this.textStyle,
+    this.duration = const Duration(milliseconds: 50),
+  });
+
+  @override
+  _TypewriterTextState createState() => _TypewriterTextState();
+}
+
+class _TypewriterTextState extends State<TypewriterText> {
+  int _currentLength = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTyping();
+  }
+
+  void _startTyping() async {
+    for (int i = 0; i <= widget.text.length; i++) {
+      await Future.delayed(widget.duration);
+      if (mounted) {
+        setState(() {
+          _currentLength = i;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      widget.text.substring(0, _currentLength),
+      style: widget.textStyle,
+    );
+  }
+}
 class HomeBottomNavigation extends StatelessWidget {
   const HomeBottomNavigation({
     super.key,
