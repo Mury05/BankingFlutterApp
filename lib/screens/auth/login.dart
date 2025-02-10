@@ -9,43 +9,44 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   final UserController _usercontroller = UserController();
-  late TextEditingController _username;
-  late TextEditingController _password;
-  String errorMessage = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _username = TextEditingController();
-    _password = TextEditingController();
-  }
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   void _login() {
-    String? error = _usercontroller.login(_username.text, _password.text);
-    if (error != null) {
-      setState(() {
-        errorMessage = error;
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Connexion ✅",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
+    if (_formKey.currentState!.validate()) {
+      String? error =
+          _usercontroller.login(_usernameController.text, _passwordController.text);
+      if (error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              error,
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            duration: Duration(seconds: 4),
           ),
-          backgroundColor: Colors.green,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Connexion réussie ✅",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            duration: Duration(seconds: 4),
           ),
-          duration: Duration(seconds: 6),
-        ),
-      );
-      Navigator.pushNamed(context, '/home');
+        );
+        Navigator.pushNamed(context, '/home');
+      }
     }
   }
 
@@ -54,112 +55,109 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Center(
-                    child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.center, // Aligne le texte à gauche
-                  children: [
-                    Text(
-                      "Welcome Back",
-                      style: TextStyle(
-                        fontSize: 40, // Augmente la taille de la police
-                        fontWeight: FontWeight.bold, // Met le texte en gras
-                        color: Colors.deepPurple, // Change la couleur du texte
-                      ),
-                    ),
-                    SizedBox(height: 1), // Espacement entre les textes
-                    Text(
-                      "Use your email or username to login",
-                      style: TextStyle(
-                        fontSize: 15, // Taille de la police réduite
-                        color: Colors.grey[600], // Couleur grise pour le texte
-                      ),
-                    ),
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text(
-                errorMessage,
-                style: TextStyle(color: Colors.red),
-              ),
-              Padding(
-                //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                padding: EdgeInsets.symmetric(horizontal: 25),
-                child: TextField(
-                  controller: _username,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email or username',
-                    // hintText: 'Enter valid email id as abc@gmail.com'
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Image en haut
+                  // Image.asset(
+                  //   "assets/images/login.png", // Assure-toi que l'image est bien ajoutée dans pubspec.yaml
+                  //   height: 150,
+                  //   width: 150,
+                  // ),
+                  SizedBox(height: 20),
+
+                  // Titre
+                  Text(
+                    "Welcome Back",
+                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.green[800]),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 25.0, right: 25.0, top: 30, bottom: 10),
-                //padding: EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
-                  controller: _password,
-                  obscureText: true,
-                  decoration: InputDecoration(
+                  SizedBox(height: 8),
+                  Text(
+                    "Use your email or username to login",
+                    style: TextStyle(fontSize: 15, color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 50),
+
+                  // Champ Email / Username
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: "Email or Username",
                       border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      hintText: 'Enter secure password'),
-                ),
-              ),
-              SizedBox(
-                height: 65,
-                width: 360,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all(Colors.deepPurple)),
-                    child: Text(
-                      'Log in ',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    onPressed: () {
-                      _login();
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "L'email ou le username est requis";
+                      }
+                      return null;
                     },
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: Text('Don\'t have an account? '),
+                  SizedBox(height: 25),
+
+                  // Champ Password
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible,
+                    decoration: InputDecoration(
+                      labelText: "Mot de passe",
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 1.0),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(
-                                fontSize: 14, color: Colors.deepPurple),
-                          )),
-                    )
-                  ],
-                ),
-              )
-            ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Le mot de passe est requis";
+                      } else if (value.length < 6) {
+                        return "Min. 6 caractères";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 35),
+
+                  // Bouton Login
+                  SizedBox(
+                    height: 65,
+                    width: 360,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Colors.green[800]),
+                      ),
+                      onPressed: _login,
+                      child: Text("Log in", style: TextStyle(color: Colors.white, fontSize: 20)),
+                    ),
+                  ),
+                  SizedBox(height: 50),
+
+                  // Lien pour s'inscrire
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Don't have an account? "),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(fontSize: 14, color: Colors.green[800]),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

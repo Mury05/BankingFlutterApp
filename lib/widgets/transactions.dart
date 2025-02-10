@@ -28,7 +28,7 @@ class ContactItem extends StatelessWidget {
             child: CircleAvatar(
               foregroundImage: AssetImage(imagePath),
               radius: 23,
-              backgroundColor: isSelected ? Colors.green : Colors.grey.shade400,
+              // backgroundColor: isSelected ? Colors.green : Colors.grey.shade400,
             ),
           ),
           const SizedBox(height: 6),

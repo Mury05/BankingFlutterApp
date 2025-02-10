@@ -28,12 +28,13 @@ class CarrouselOnBoarding extends StatelessWidget {
                 // Image de fond
                 Image.asset(
                   item["image"]!,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
-    
+
                 // Contenu texte
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -44,36 +45,36 @@ class CarrouselOnBoarding extends StatelessWidget {
                           child: const Text(
                             "SKIP",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 47, 81, 48),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-    
+
                       const Spacer(),
-    
+
                       // Texte principal
                       Text(
                         item["title"]!,
                         style: GoogleFonts.playfairDisplay(
-                          fontSize: 50,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.green[900],
                         ),
                       ),
-    
+
                       const SizedBox(height: 20),
-    
+
                       // Sous-texte
                       Text(
                         item["subtitle"]!,
                         style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 47, 81, 48),
                         ),
                       ),
-    
+
                       const SizedBox(height: 80),
                     ],
                   ),
@@ -82,8 +83,7 @@ class CarrouselOnBoarding extends StatelessWidget {
             );
           },
         ),
-    
-    
+
         // Indicateur de pages
         Positioned(
           bottom: 70,
@@ -94,8 +94,8 @@ class CarrouselOnBoarding extends StatelessWidget {
               controller: _pageController,
               count: carouselItems.length,
               effect: ExpandingDotsEffect(
-                activeDotColor: Colors.white,
-                dotColor: Colors.grey.shade400,
+                activeDotColor: Colors.green.shade900,
+                dotColor: Colors.green.shade400,
                 dotHeight: 8,
                 dotWidth: 8,
               ),
@@ -128,7 +128,9 @@ class HomeBottomNavigation extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/register');
+          },
           child: const Text(
             "OPEN AN ACCOUNT >",
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
