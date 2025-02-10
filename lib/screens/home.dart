@@ -12,19 +12,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Map<String, String>> carouselItems = [
     {
-      "image": "image1.jpg",
-      "title": "Step into\nthe banking\nfuture now",
-      "subtitle":
-          "We will do everything but count coins.\nFaster, easier, and more convenient."
-    },
-    {
-      "image": "image2.jpg",
+      "image": "img2.png",
       "title": "Your money,\nyour control",
       "subtitle":
           "Manage your finances seamlessly\nwith our cutting-edge solutions."
     },
     {
-      "image": "image4.jpg",
+      "image": "img3.png",
+      "title": "Step into\nthe banking\nfuture now",
+      "subtitle":
+          "We will do everything but count coins.\nFaster, easier, and more convenient."
+    },
+    {
+      "image": "img1.png",
       "title": "Security &\nInnovation",
       "subtitle":
           "Banking redefined for the digital age.\nExperience secure and smart banking."

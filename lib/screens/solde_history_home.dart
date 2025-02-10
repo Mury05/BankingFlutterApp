@@ -125,9 +125,9 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                     key: Key(transaction.id), // Identifiant unique
                     direction:
                         DismissDirection.endToStart, // Swipe de droite à gauche
-                    confirmDismiss: (direction) async {
-                      return await _showConfirmDeleteDialog(context);
-                    },
+                    // confirmDismiss: (direction) async {
+                    //   return await _showConfirmDeleteDialog(context);
+                    // },
                     onDismissed: (direction) {
                       setState(() {
                         _transactions.removeTransaction(transaction.id);
@@ -138,10 +138,11 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
                           backgroundColor: Colors.green.shade500,
                           content: Text(
                             "Transaction deleted",
-                            style: TextStyle(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           action: SnackBarAction(
-                            textColor: Colors.green[900],
+                            // backgroundColor: Colors.red.shade800,
+                            textColor: Colors.white,
                             label: "Undo",
                             onPressed: () {
                               setState(() {

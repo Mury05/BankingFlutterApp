@@ -91,17 +91,17 @@ class _MyAddTransactionPageState extends State<MyAddTransactionPage> {
         );
         Navigator.pushNamed(context, '/home');
       }
-    }else{
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Please enter a valid amount greater than 0.",
-              style: TextStyle(color: Colors.white, fontFamily: "Roboto"),
-            ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 3),
+        SnackBar(
+          content: Text(
+            "Please enter a valid amount greater than 0.",
+            style: TextStyle(color: Colors.white, fontFamily: "Roboto"),
           ),
-        );
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 
@@ -117,6 +117,7 @@ class _MyAddTransactionPageState extends State<MyAddTransactionPage> {
         elevation: 0,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Spacer(),
 
@@ -153,14 +154,13 @@ class _MyAddTransactionPageState extends State<MyAddTransactionPage> {
                   onPressed: () => setState(() => amount = "100.00")),
             ],
           ),
-
-          const SizedBox(height: 20),
-          const Divider(),
-
-          // Clavier numérique
-          NumPad(onNumberTap: addNumber, onDelete: deleteNumber),
+          const Spacer(),
         ],
       ),
+      // Clavier numérique
+      persistentFooterButtons: [
+        NumPad(onNumberTap: addNumber, onDelete: deleteNumber),
+      ],
       bottomNavigationBar: GestureDetector(
         onTap: _creditCard,
         child: Container(

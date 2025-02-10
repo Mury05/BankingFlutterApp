@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
-                            color: Colors.deepPurple,
+                            color: Colors.green[800],
                           ),
                         ),
                         SizedBox(height: 8),
@@ -209,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              WidgetStateProperty.all(Colors.deepPurple),
+                              WidgetStateProperty.all(Colors.green[800]),
                         ),
                         onPressed: _register,
                         child: Text("S'inscrire",
@@ -233,12 +233,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.only(left: 1.0),
                           child: InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context, '/');
+                                Navigator.pushNamed(context, '/login');
                               },
                               child: Text(
                                 'Login',
                                 style: TextStyle(
-                                    fontSize: 14, color: Colors.deepPurple),
+                                    fontSize: 14, color: Colors.green[800]),
                               )),
                         )
                       ],

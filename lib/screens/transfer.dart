@@ -125,7 +125,7 @@ class _MyTransferPageState extends State<MyTransferPage> {
                     itemBuilder: (context, index) {
                       User user = users[index];
                       return ContactItem(
-                          imagePath: "R.jpg",
+                          imagePath: "O.png",
                           name: user.username,
                           isSelected: selectedContact == user.username,
                           onTap: () {
@@ -197,16 +197,22 @@ class _MyTransferPageState extends State<MyTransferPage> {
             ],
           ),
 
-          const SizedBox(height: 20),
-          const Divider(),
+          // const SizedBox(height: 20),
+          const Spacer(),
 
-          // Clavier numérique
+
+          // const Divider(),
+
+          
+        ],
+      ),
+      persistentFooterButtons: [
+        // Clavier numérique
           NumPad(
             onNumberTap: addNumber,
             onDelete: deleteNumber,
           ),
-        ],
-      ),
+      ],
       bottomNavigationBar: GestureDetector(
         onTap: sendMoney,
         child: Container(
