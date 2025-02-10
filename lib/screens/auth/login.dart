@@ -27,8 +27,6 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             backgroundColor: Colors.red,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             duration: Duration(seconds: 4),
           ),
         );
@@ -40,8 +38,6 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             duration: Duration(seconds: 4),
           ),
         );
@@ -117,8 +113,6 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Le mot de passe est requis";
-                      } else if (value.length < 6) {
-                        return "Min. 6 caractères";
                       }
                       return null;
                     },
