@@ -27,68 +27,67 @@ class TranslationPage extends StatefulWidget {
 class _TranslationPageState extends State<TranslationPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    // Utilise l'icône passée en paramètre
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Icon(
-                        widget.icon, // L'icône est passée via widget
-                        size: 24,
-                        color: widget.color,
-                      ),
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  // Utilise l'icône passée en paramètre
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        // ignore: deprecated_member_use
+                        color: Colors.grey.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Icon(
+                      widget.icon, // L'icône est passée via widget
+                      size: 24,
+                      color: widget.color,
                     ),
-                    SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Utilise le nom passé en paramètre
-                        Text(
-                          widget.name, // Le nom est passé via widget
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        // Utilise la date passée en paramètre
-                        Text(
-                          widget.date, // La date est passée via widget
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                // Utilise le montant passé en paramètre
-                Text(
-                  widget.amount, // Le montant est passé via widget
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: widget.type == 'credit'
-                        ? Colors.green[700]
-                        : Colors.red,
                   ),
+                  SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Utilise le nom passé en paramètre
+                      Text(
+                        widget.name, // Le nom est passé via widget
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      // Utilise la date passée en paramètre
+                      Text(
+                        widget.date, // La date est passée via widget
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              // Utilise le montant passé en paramètre
+              Text(
+                widget.amount, // Le montant est passé via widget
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: widget.type == 'credit'
+                      ? Colors.green[700]
+                      : Colors.red,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

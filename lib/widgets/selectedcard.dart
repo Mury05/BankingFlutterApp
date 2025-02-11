@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CardSelectionModal extends StatefulWidget {
+  const CardSelectionModal({super.key});
+
   @override
-  _CardSelectionModalState createState() => _CardSelectionModalState();
+  State<CardSelectionModal> createState() => _CardSelectionModalState();
 }
 
 class _CardSelectionModalState extends State<CardSelectionModal> {

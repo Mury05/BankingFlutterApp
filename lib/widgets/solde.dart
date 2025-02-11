@@ -6,7 +6,7 @@ class SoldePage extends StatefulWidget {
   const SoldePage({super.key, required this.balance});
 
   @override
-  _SoldePageState createState() => _SoldePageState();
+  State<SoldePage> createState() => _SoldePageState();
 }
 
 class _SoldePageState extends State<SoldePage>
@@ -110,6 +110,7 @@ class _SoldePageState extends State<SoldePage>
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
+                // ignore: deprecated_member_use
                 color: Colors.green.withOpacity(0.1),
                 blurRadius: 10,
                 offset: Offset(0, 4),

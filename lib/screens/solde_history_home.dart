@@ -34,6 +34,7 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
     }
   }
 
+  // ignore: unused_element
   Future<bool?> _showConfirmDeleteDialog(BuildContext context) async {
     return showDialog<bool>(
       context: context,

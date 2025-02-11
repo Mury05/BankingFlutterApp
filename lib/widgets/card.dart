@@ -13,7 +13,8 @@ class CardPage extends StatefulWidget {
   });
 
   @override
-  _CardPageState createState() => _CardPageState();
+  State<CardPage> createState() => _CardPageState();
+
 }
 
 class _CardPageState extends State<CardPage> with SingleTickerProviderStateMixin {
@@ -42,56 +43,54 @@ class _CardPageState extends State<CardPage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  widget.cardType,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green[900],
-                  ),
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                widget.cardType,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[900],
                 ),
-                SizedBox(height: 5),
-                // Affichage de firstAmount avec animation
-                AnimatedBuilder(
-                  animation: _controller,
-                  builder: (context, child) {
-                    return Text(
-                      widget.firstAmount, // Formatage du montant
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[600],
-                      ),
-                    );
-                  },
+              ),
+              SizedBox(height: 5),
+              // Affichage de firstAmount avec animation
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Text(
+                    widget.firstAmount, // Formatage du montant
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey[600],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          // Affichage de secondAmount avec animation
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Text(
+                "\$${_animatedSecondAmount.toStringAsFixed(2)}", // Formatage du montant
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.black,
                 ),
-              ],
-            ),
-            // Affichage de secondAmount avec animation
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Text(
-                  "\$${_animatedSecondAmount.toStringAsFixed(2)}", // Formatage du montant
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

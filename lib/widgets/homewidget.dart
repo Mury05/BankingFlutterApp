@@ -157,7 +157,7 @@ class TypewriterText extends StatefulWidget {
   });
 
   @override
-  _TypewriterTextState createState() => _TypewriterTextState();
+  State<TypewriterText> createState() => _TypewriterTextState();
 }
 
 class _TypewriterTextState extends State<TypewriterText> {
