@@ -1,4 +1,5 @@
 import 'package:banking_flutter_app/controllers/transactionscontroller.dart';
+import 'package:banking_flutter_app/controllers/usercontroller.dart';
 import 'package:banking_flutter_app/widgets/card.dart';
 import 'package:banking_flutter_app/widgets/translation.dart';
 import 'package:banking_flutter_app/widgets/solde.dart';
@@ -14,6 +15,7 @@ class SoldeHistoryHome extends StatefulWidget {
 
 class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
   final Transactions _transactions = Transactions();
+  final UserController _userController = UserController();
 
   @override
   void initState() {
@@ -45,7 +47,10 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false), // Annuler
-              child: Text("Cancel", style:  TextStyle(color: Colors.green),),
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.green),
+              ),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true), // Confirmer
@@ -69,8 +74,13 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: IconButton(
-              icon: const Icon(Icons.qr_code),
-              onPressed: () {},
+              // icon: const Icon(Icons.qr_code),
+              icon: const Icon(Icons.logout, color: Colors.red),
+              onPressed: () async {
+                await _userController.logout();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/login', (route) => false);
+              },
             ),
           ),
         ],

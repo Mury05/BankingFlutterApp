@@ -1,3 +1,4 @@
+import 'package:banking_flutter_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import '../../controllers/usercontroller.dart';
 
@@ -13,59 +14,40 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final UserController _userController = UserController();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
-  void _register() {
-    if (_formKey.currentState!.validate()) {
-      String? error = _userController.register(
-        _usernameController.text,
-        _emailController.text,
-        _passwordController.text,
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _initializeFirebase();
+  // }
+
+  // Future<void> _initializeFirebase() async {
+  //   await Firebase.initializeApp();
+  // }
+
+ void _register() async {
+  if (_formKey.currentState!.validate()) {
+    String? error = await _userController.register(
+      _usernameController.text,
+      _emailController.text,
+      _passwordController.text,
       );
-      if (error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              error,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            backgroundColor: const Color.fromARGB(255, 222, 107, 99),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            duration: Duration(seconds: 6),
-          ),
-        );
-      } else {
-        Navigator.pushNamed(context, '/login');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Compte créé pour ${_usernameController.text}",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            duration: Duration(seconds: 6),
-          ),
-        );
-      }
+
+    if (error != null) {
+      // ignore: use_build_context_synchronously
+      showMessage(error, Colors.red, context);
+    } else {
+      // ignore: use_build_context_synchronously
+      showMessage("Compte créé avec succès !", Colors.green, context,);
+      Navigator.pushNamed(context, '/login');
+    }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   // Champ Username
                   TextFormField(
                     controller: _usernameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Username",
                       border: OutlineInputBorder(),
                     ),
@@ -114,17 +96,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (value == null || value.isEmpty) {
                         return "Le username est requis";
                       } else if (value.length < 3) {
-                        return "Mininum 3 caractères";
+                        return "Minimum 3 caractères";
                       }
                       return null;
                     },
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
                   // Champ Email
                   TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Email",
                       border: OutlineInputBorder(),
                     ),
@@ -132,14 +114,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "L'email est requis";
-                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                          .hasMatch(value)) {
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return "Format d'email invalide";
                       }
                       return null;
                     },
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
                   // Champ Password
                   TextFormField(
@@ -147,11 +128,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       labelText: "Mot de passe",
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
-                        icon: Icon(_isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
                             _isPasswordVisible = !_isPasswordVisible;
@@ -168,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
                   // Champ Confirm Password
                   TextFormField(
@@ -176,15 +155,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: !_isConfirmPasswordVisible,
                     decoration: InputDecoration(
                       labelText: "Confirmer le mot de passe",
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
-                        icon: Icon(_isConfirmPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(_isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
-                            _isConfirmPasswordVisible =
-                                !_isConfirmPasswordVisible;
+                            _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
                           });
                         },
                       ),
@@ -198,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 35),
+                  const SizedBox(height: 35),
 
                   // Bouton Inscription
                   SizedBox(
@@ -212,9 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               WidgetStateProperty.all(Colors.green[800]),
                         ),
                         onPressed: _register,
-                        child: Text("S'inscrire",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20)),
+                      child: const Text("S'inscrire", style: TextStyle(color: Colors.white, fontSize: 20)),
                       ),
                     ),
                   ),
