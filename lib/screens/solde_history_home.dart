@@ -16,10 +16,11 @@ class SoldeHistoryHome extends StatefulWidget {
 class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
   final Transactions _transactions = Transactions();
   final UserController _userController = UserController();
-
+  String username = '';
   @override
   void initState() {
     super.initState();
+    fetchUserInfo();
   }
 
   String formatTransactionDate(DateTime date) {
@@ -33,6 +34,20 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
     } else {
       return DateFormat('EEEE, MMM d, yyyy – $formattedTime')
           .format(date); // Exemple: "Monday, Feb 5, 2025 – 12:00 PM"
+    }
+  }
+
+  void fetchUserInfo() async {
+    Map<String, dynamic>? userInfo = await _userController.getUserInfo();
+
+    if (userInfo != null) {
+      setState(() {
+        username = userInfo['username'];
+      });
+      print("Nom d'utilisateur : ${userInfo['username']}");
+      print("Email : ${userInfo['email']}");
+    } else {
+      print("Aucune information utilisateur trouvée.");
     }
   }
 
@@ -66,8 +81,8 @@ class _SoldeHistoryHomeState extends State<SoldeHistoryHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Michelle Anderson",
+        title: Text(
+          username,
           style: TextStyle(fontSize: 15),
         ),
         actions: [

@@ -32,7 +32,7 @@ class _CarrouselOnBoardingState extends State<CarrouselOnBoarding> {
 
         Future.delayed(const Duration(milliseconds: 600), () {
           setState(() {
-          currentIndex = newIndex;
+            currentIndex = newIndex;
             opacity = 1.0;
           });
         });
@@ -74,11 +74,16 @@ class _CarrouselOnBoardingState extends State<CarrouselOnBoarding> {
                         alignment: Alignment.topRight,
                         child: TextButton(
                           onPressed: () {},
-                          child: const Text(
-                            "SKIP",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 47, 81, 48),
-                              fontWeight: FontWeight.bold,
+                          child: GestureDetector(
+                            onTap: () => {
+                              Navigator.pushNamed(context, '/login'),
+                            },
+                            child: const Text(
+                              "SKIP",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 47, 81, 48),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -90,11 +95,11 @@ class _CarrouselOnBoardingState extends State<CarrouselOnBoarding> {
                         duration: const Duration(milliseconds: 500),
                         opacity: index == currentIndex ? opacity : 0.0,
                         child: Text(
-                        item["title"]!,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.green[900],
+                          item["title"]!,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 35,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.green[900],
                           ),
                         ),
                       ),
@@ -108,7 +113,8 @@ class _CarrouselOnBoardingState extends State<CarrouselOnBoarding> {
                           fontSize: 16,
                           color: Color.fromARGB(255, 47, 81, 48),
                         ),
-                        duration: Duration(milliseconds: 30), // Plus rapide pour le sous-titre
+                        duration: Duration(
+                            milliseconds: 30), // Plus rapide pour le sous-titre
                       ),
 
                       const SizedBox(height: 80),
@@ -188,6 +194,7 @@ class _TypewriterTextState extends State<TypewriterText> {
     );
   }
 }
+
 class HomeBottomNavigation extends StatelessWidget {
   const HomeBottomNavigation({
     super.key,

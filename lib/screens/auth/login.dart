@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         // ignore: use_build_context_synchronously
         showMessage("Connexion réussie !", Colors.green, context);
-        // Navigator.pushNamed(context, '/home'); // Rediriger après connexion
+        Navigator.pushNamed(context, '/home'); // Rediriger après connexion
       }
     }
   }
